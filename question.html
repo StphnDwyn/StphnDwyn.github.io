@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Question</title>
+    <link rel="shortcut icon" href="Img/hearts.png" type="image/x-icon">
+    <style>
+        body {
+            background-color: pink;
+            font-family: monospace;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .question-container {
+            background: rgb(243, 215, 215);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-family: monospace;
+            max-width: 300px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .question-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .button-container button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            font-family: monospace;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .yes-btn { 
+            background-color: lightgreen;
+            font-family: monospace;
+        }
+        .no-btn {
+            background-color: lightcoral;
+            font-family: monospace;
+        }
+        .yes-btn:hover { background-color: green; }
+        .no-btn:hover { background-color: red; }
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-family: monospace;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .thank-you-message {
+            display: none;
+            font-family: monospace;
+            font-size: 24px;
+            font-weight: bold;
+            color: red;
+        }
+        .Btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            overflow: hidden;
+            transition-duration: .3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background-color: rgb(255, 65, 65);
+        }
+
+        /* Plus sign */
+        .sign {
+            width: 100%;
+            transition-duration: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sign svg {
+            width: 17px;
+        }
+
+        .sign svg path {
+            fill: white;
+        }
+
+        /* Text */
+        .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition-duration: .3s;
+        }
+
+        /* Hover effect */
+        .Btn:hover {
+            width: 125px;
+            border-radius: 40px;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover .sign {
+            width: 30%;
+            transition-duration: .3s;
+            padding-left: 20px;
+        }
+
+        .Btn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: .3s;
+            padding-right: 10px;
+        }
+
+        /* Button click effect */
+        .Btn:active {
+            transform: translate(2px ,2px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="question-container" id="questionBox">
+        <img id="questionImage" src="Img/please.gif" alt="Question Image">
+        <p id="questionText">Can you be my Valentine's Date?</p>
+        <div class="button-container" id="buttonContainer">
+            <button class="yes-btn" onclick="nextQuestion(true)">Yes</button>
+            <button class="no-btn" onclick="nextQuestion(false)">No</button>
+        </div>
+    </div>
+    
+    <div class="message-box" id="messageBox" onclick="closeMessage()">
+        <p>Thank you for accepting! 💖</p>
+    </div>
+    
+    <div class="thank-you-message" id="thankYouMessage">Thank you for answering! 💖</div>
+
+    <script>
+        let questionIndex = 0;
+        let questions = [
+            { text: "Will you go on a date with me?", img: "Img/please.gif" },
+            { text: "Are you sure?", img: "Img/sad.gif" },
+            { text: "Final chance! Will you say yes?", img: "Img/puppyeyes.gif" },
+            { text: "WARNING: If you say no, you'll be sent back! Say yes?", img: "Img/warning.gif" }
+        ];
+        let preferenceQuestions = [
+            { text: "What kind o date do you prefer?", img: "Img/location.gif", choices: ["Mall Date", "Picnic", "Cine Date", "My House"] },
+            { text: "Where do you prefer to eat?", img: "Img/food.gif", choices: ["Mang Inasal", "Jollibee", "Mcdo", "Others"] },
+            { text: "What do you wanna do?", img: "Img/watudoin.gif", choices: ["Arcade", "Photobooth", "Playground", "Others"] },
+            { text: "What dessert do you prefer?", img: "Img/dessert.gif", choices: ["Ice Cream", "Donut", "Cake", "Others"] },
+            { text: "What gift do you prefer?", img: "Img/gift.gif", choices: ["Flowers", "Chocolates", "Stuffed Toy", "Body Accessories"] }
+        ];
+        
+        function nextQuestion(isYes) {
+    if (isYes) {
+        if (questionIndex < 2) {
+            questionIndex = 2;  // Skip to the warning question
+        } else if (questionIndex === 2) {
+            document.getElementById("messageBox").style.display = "block";
+            sessionStorage.setItem("agreed", "yes"); // Unlock gifts on nextpage.html
+        } else {
+            questionIndex = 0; // Reset to first question if they say yes after the warning
+            document.getElementById("questionText").textContent = questions[questionIndex].text;
+            document.getElementById("questionImage").src = questions[questionIndex].img;
+        }
+    } else {
+        questionIndex++;
+        if (questionIndex >= questions.length) {
+            window.location.href = "nextpage.html"; // Return if still no
+            return;
+        }
+    }
+    document.getElementById("questionText").textContent = questions[questionIndex].text;
+    document.getElementById("questionImage").src = questions[questionIndex].img;
+}
+
+
+        function closeMessage() {
+            document.getElementById("messageBox").style.display = "none";
+            startPreferenceQuestions();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+    // Check if the user already answered
+    if (sessionStorage.getItem("answered") === "true") {
+        document.getElementById("questionBox").style.display = "none";
+        document.getElementById("thankYouMessage").textContent = "You already answered the questions, Love!";
+        document.getElementById("thankYouMessage").style.display = "block";
+        return;
+    }
+});
+
+function startPreferenceQuestions() {
+    let qIndex = 0;
+    showPreferenceQuestion(qIndex);
+
+    function showPreferenceQuestion(index) {
+        if (index >= preferenceQuestions.length) {
+            document.getElementById("questionBox").style.display = "none";
+            document.getElementById("thankYouMessage").textContent = "Thank you for answering! 💖";
+            document.getElementById("thankYouMessage").style.display = "block";
+            
+            // Store progress in sessionStorage
+            sessionStorage.setItem("answered", "true");
+            return;
+        }
+        let questionObj = preferenceQuestions[index];
+        document.getElementById("questionText").textContent = questionObj.text;
+        
+        if (questionObj.img) {
+            document.getElementById("questionImage").src = questionObj.img;
+        }
+        
+        let buttonContainer = document.getElementById("buttonContainer");
+        buttonContainer.innerHTML = '';
+        
+        questionObj.choices.forEach((choice) => {
+            let button = document.createElement("button");
+            button.textContent = choice;
+            button.addEventListener("click", () => {
+                showPreferenceQuestion(index + 1);
+            });
+            buttonContainer.appendChild(button);
+        });
+    }
+}
+        function goBack() {
+            window.location.href = "nextpage.html";
+        }
+    </script>
+    <button class="Btn" onclick="goBack()">
+        <div class="sign">
+            <svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
+        </div>
+        <div class="text">Back</div>
+    </button>
+</body>
+</body>
+</html>

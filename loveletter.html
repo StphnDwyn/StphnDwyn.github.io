@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Letter</title>
+    <link rel="shortcut icon" href="Img/love-letter.png" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Fuzzy Bubbles' rel='stylesheet'>
+    <style>
+        body {
+            background-image: url('Img/love.jpg');
+            font-family: 'Fuzzy Bubbles';
+            text-align: center;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Perfect Heart Shape */
+        .heart-btn {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: relative;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            display: block;
+        }
+        .heart-btn::before,
+        .heart-btn::after {
+            content: "";
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart-btn::before {
+            top: -25px;
+            left: 0;
+        }
+        .heart-btn::after {
+            top: 0;
+            left: 25px;
+        }
+        .heart-btn:hover {
+            transform: rotate(-45deg) scale(1.1);
+        }
+
+        /* Letter Reveal Box */
+        .letter-container {
+            position: absolute;
+            bottom: -100%;
+            width: 80%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: bottom 0.5s ease-in-out, opacity 0.3s ease-in-out;
+            text-align: left;
+            opacity: 0;
+        }
+        .show {
+            bottom: 20%;
+            opacity: 1;
+        }
+
+        /* New Back Button */
+        .Btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            overflow: hidden;
+            transition-duration: .3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background-color: rgb(255, 65, 65);
+        }
+
+        /* Plus sign */
+        .sign {
+            width: 100%;
+            transition-duration: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sign svg {
+            width: 17px;
+        }
+
+        .sign svg path {
+            fill: white;
+        }
+
+        /* Text */
+        .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition-duration: .3s;
+        }
+
+        /* Hover effect */
+        .Btn:hover {
+            width: 125px;
+            border-radius: 40px;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover .sign {
+            width: 30%;
+            transition-duration: .3s;
+            padding-left: 20px;
+        }
+
+        .Btn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: .3s;
+            padding-right: 10px;
+        }
+
+        /* Button click effect */
+        .Btn:active {
+            transform: translate(2px ,2px);
+        }
+    </style>
+    <script>
+        function showLetter() {
+            const letter = document.getElementById("letter");
+            const heart = document.querySelector(".heart-btn");
+
+            letter.classList.add("show");
+            heart.style.display = "none"; // Hide heart when letter opens
+
+            // Add event listener to close letter when clicking outside
+            setTimeout(() => {
+                document.addEventListener("click", closeLetter);
+            }, 100); // Delay to prevent immediate closing when clicking heart
+        }
+
+        function closeLetter(event) {
+            const letter = document.getElementById("letter");
+
+            // Check if the user clicked **outside** the letter
+            if (!letter.contains(event.target)) {
+                letter.classList.remove("show");
+                document.querySelector(".heart-btn").style.display = "block"; // Show heart again
+                
+                // Remove event listener to prevent unnecessary triggers
+                document.removeEventListener("click", closeLetter);
+            }
+        }
+
+        function goBack() {
+            window.location.href = "nextpage.html";
+        }
+    </script>
+</head>
+<body>
+    <!-- Heart Button -->
+    <div class="heart-btn" onclick="showLetter()"></div>
+
+    <!-- Letter Container -->
+    <div class="letter-container" id="letter">
+        <h2>Love Letter 💌</h2>
+        <p>Dear Love,</p>
+        <p>Hi, Love. Happy Valentine’s Day. Not good in letters pero lupit first Valentines natin 'to.</p>
+        <p>I want thank you for staying, I love you. Maraming taon pa tayo magsasama so more Valentine's to celebrate pa HAHAHA.</p>
+        <p>Sorry ito lang muna gift ko sayo hehehe... please enjoy this simple gift.</p>
+        <p>Happy Valentine’s Day, Love!❤️</p>
+        <p>Forever yours.</p>
+        <p><b>Your Boyfriend, Stephen Dwayne</b></p>
+    </div>
+
+    <!-- New Back Button -->
+    <button class="Btn" onclick="goBack()">
+        <div class="sign">
+            <svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
+        </div>
+        <div class="text">Back</div>
+    </button>
+</body>
+</html>

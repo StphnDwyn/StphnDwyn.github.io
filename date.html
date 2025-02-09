@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time</title>
+    <link rel="shortcut icon" href="Img/date.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: monospace;
+            text-align: center;
+            background-image: url('Img/datebg.jpg');
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .timer {
+            font-family: monospace;
+            font-size: 50px;
+            font-weight: bold;
+            color: red;
+            background:rgba(255, 192, 203, 0.753);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .timer:hover {
+            transform: scale(1.1);
+        }
+
+        .Btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            overflow: hidden;
+            transition-duration: .3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+            background-color: rgb(255, 65, 65);
+        }
+
+        /* Plus sign */
+        .sign {
+            width: 100%;
+            transition-duration: .3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sign svg {
+            width: 17px;
+        }
+
+        .sign svg path {
+            fill: white;
+        }
+
+        /* Text */
+        .text {
+            position: absolute;
+            right: 0%;
+            width: 0%;
+            opacity: 0;
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition-duration: .3s;
+        }
+
+        /* Hover effect */
+        .Btn:hover {
+            width: 125px;
+            border-radius: 40px;
+            transition-duration: .3s;
+        }
+
+        .Btn:hover .sign {
+            width: 30%;
+            transition-duration: .3s;
+            padding-left: 20px;
+        }
+
+        .Btn:hover .text {
+            opacity: 1;
+            width: 70%;
+            transition-duration: .3s;
+            padding-right: 10px;
+        }
+
+        /* Button click effect */
+        .Btn:active {
+            transform: translate(2px ,2px);
+        }
+    </style>
+</head>
+<body>
+    <h1>OUR TOTAL TIME TOGETHER</h1>
+
+    <div class="timer" id="timer">Loading...</div>
+    
+    <button class="Btn" onclick="goBack()">
+        <div class="sign">
+            <svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg>
+        </div>
+        <div class="text">Back</div>
+    </button>
+
+</body>
+    <script>
+        function updateTime() {
+            let now = new Date();
+            let startDate = new Date("2024-07-18T00:00:00"); // Set a fixed start date
+            let diffInSeconds = Math.floor((now - startDate) / 1000);
+
+            let days = Math.floor(diffInSeconds / 86400);
+            let hours = Math.floor((diffInSeconds % 86400) / 3600);
+            let minutes = Math.floor((diffInSeconds % 3600) / 60);
+            let seconds = diffInSeconds % 60;
+
+            document.getElementById("timer").innerText = `${days}d ${hours}h ${minutes}m ${seconds.toString().padStart(2, '0')}s`;
+        }
+
+        setInterval(updateTime, 1000); // Update every second
+        updateTime(); // Initial call to set display immediately
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+    <p> Time flys talaga. Ang bilis ng panahon ilang months na agad tayo. Stay Strong sa'tin hanggang hindi na mabilang ang oras. </p>
+    <p style="color: red; font-size: 20px;"> I LOVE YOU </p>
+</body>
+</html>

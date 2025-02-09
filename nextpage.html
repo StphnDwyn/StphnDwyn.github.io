@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="shortcut icon" href="Img/happy-valentines.png" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Caveat' rel='stylesheet'>
+    <style>
+        body {
+            background-color: pink;
+            font-size: 70%;
+            font-family: 'Caveat';
+            text-align: center;
+        }
+        h1 {
+            font-size: 40px;
+        }
+        .slider-container {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .slider {
+            width: 400px; /* Landscape size */
+            height: 200px;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+            position: relative;
+            border: 3px solid white;
+            margin: 10px;
+        }
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .slider:hover {
+            transform: scale(1.1);
+            border-color: red;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .slider:hover img {
+            opacity: 0.8;
+        }
+        .caption {
+            margin-top: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .message {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 12px;
+            padding: 5px;
+            text-align: center;
+            display: none;
+        }
+        .disabled .message {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, Love!</h1>
+    <h2>Happy Valentines, Again. Please accept this simple gift of mine. 💖</h2>
+
+    <div class="slider-container">
+        <!-- Love Letter -->
+        <div class="slider" id="loveLetter">
+            <img src="Img/loveletter.jpg" title="Love Letter" alt="Love Letter">
+            <div class="caption">Love Letter</div>
+        </div>
+
+        <!-- Valentine Question -->
+        <div class="slider" id="valentineQuestion">
+            <img src="Img/question.jpg" title="Date" alt="Valentine Question">
+            <div class="caption">Date</div>
+        </div>
+        <!-- In Relationship -->
+        <div class="slider" id="inRelationship">
+            <img src="Img/relationship.jpg" title="In Relationship" alt="In Relationship">
+            <div class="caption">In Relationship</div>
+        </div>
+
+        <!-- Gifts (Disabled Until She Agrees) -->
+        <div class="slider disabled" id="giftSlider">
+            <img src="Img/gift.jpg" title="Gifts" alt="Gifts">
+            <div class="caption">Gifts</div>
+            <div class="message">Unlock this by answering on the 2nd page!</div>
+        </div> 
+    </div>
+
+    <script>
+        window.onload = function() {
+            if (!sessionStorage.getItem("authenticated")) {
+                window.location.href = "index.html"; // Redirect to login page if not authenticated
+            }
+
+            // Function to navigate to another page
+            function navigateTo(page) {
+                window.location.href = page;
+            }
+
+            // Assign click events to the sliders
+            document.getElementById("loveLetter").onclick = function() {
+                navigateTo("loveletter.html");
+            };
+
+            document.getElementById("valentineQuestion").onclick = function() {
+                navigateTo("question.html");
+            };
+
+            let agreed = sessionStorage.getItem("agreed");
+            let giftSlider = document.getElementById("giftSlider");
+
+            if (agreed === "yes") {
+                giftSlider.classList.remove("disabled");
+                giftSlider.onclick = function() {
+                    navigateTo("gifts.html");
+                };
+            }
+
+            document.getElementById("inRelationship").onclick = function() {
+                navigateTo("date.html");
+            };
+        };
+    </script>
+</body>
+</html>
