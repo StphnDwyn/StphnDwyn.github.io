@@ -52,22 +52,32 @@
             transform: rotate(-45deg) scale(1.1);
         }
 
-        /* Letter Reveal Box */
         .letter-container {
             position: absolute;
-            bottom: -100%;
-            width: 80%;
+            bottom: -100%; /* Starts fully hidden */
+            width: 90%;
+            max-height: 70vh; /* Limits height */
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            transition: bottom 0.5s ease-in-out, opacity 0.3s ease-in-out;
-            text-align: left;
+            transition: bottom 0.5s ease-in-out, opacity 0.3s ease-in-out;text-align: left;
             opacity: 0;
+            overflow-y: auto; /* Enables scrolling */
+            z-index: 10; /* Ensures it's above the heart */
         }
+        
         .show {
-            bottom: 20%;
+            bottom: 10%; /* Adjusted so it's fully visible */
             opacity: 1;
+        }
+        
+        /* Ensure heart button stays clickable */
+
+        .heart-btn {
+            position: relative;
+            z-index: 20; /* Higher than letter-container */
+            pointer-events: auto; /* Ensures it's clickable */
         }
 
         /* New Back Button */
@@ -184,7 +194,8 @@
         <h2>Love Letter 💌</h2>
         <p>Dear Love,</p>
         <p>Hi, Love. Happy Valentine’s Day. Not good in letters pero lupit first Valentines natin 'to.</p>
-        <p>I want thank you for staying, I love you. Maraming taon pa tayo magsasama so more Valentine's to celebrate pa HAHAHA.</p>
+        <p>I want thank you for staying, I love you. Maraming taon pa tayo magsasama so more Valentine's to celebrate pa HAHAHA. And also, thank you for everything na ginawa mo, for loving me, sa mga gifts mo. I really appreriate all of that. That's why I'm very happy for having you, or being my beautiful girlfriend, asawa, bestfriend at nanay minsan. I never regret sa pag amin sa'yo.</p>
+        <p>I want to say sorry rin sa mga nagawa ko sa'yo. And yung mga asaran natin sa 'kabit', I hope 'wag mo seryosohin 'yun. I want you to know na ikaw lang. I hope you know na mahal na mahal kita, I love you so much, Daniela mylove.</p>
         <p>Sorry ito lang muna gift ko sayo hehehe... please enjoy this simple gift.</p>
         <p>Happy Valentine’s Day, Love!❤️</p>
         <p>Forever yours.</p>
